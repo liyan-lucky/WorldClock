@@ -1,0 +1,114 @@
+<Window x:Class="WorldClockWpf.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:shell="clr-namespace:System.Windows.Shell;assembly=PresentationFramework"
+        mc:Ignorable="d"
+        Title="WorldClock"
+        Width="320"
+        Height="240"
+        MinWidth="220"
+        MinHeight="150"
+        ResizeMode="CanResize"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        ShowInTaskbar="False">
+    <shell:WindowChrome.WindowChrome>
+        <shell:WindowChrome
+            CornerRadius="14"
+            CaptionHeight="0"
+            GlassFrameThickness="0"
+            ResizeBorderThickness="6"
+            UseAeroCaptionButtons="False" />
+    </shell:WindowChrome.WindowChrome>
+
+    <Border x:Name="RootBorder"
+            CornerRadius="14"
+            Padding="12">
+        <Grid>
+            <ScrollViewer VerticalScrollBarVisibility="Disabled"
+                          HorizontalScrollBarVisibility="Disabled"
+                          Background="Transparent">
+                <ItemsControl x:Name="ClockItemsControl" ItemsSource="{Binding ClockItems}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Margin="0,0,0,8"
+                                    Padding="10,9,6,9"
+                                    CornerRadius="12"
+                                    Background="{Binding CardBackground}"
+                                    BorderBrush="{Binding CardBorderBrush}"
+                                    BorderThickness="1">
+                                <Border.ContextMenu>
+                                    <ContextMenu>
+                                        <MenuItem Header="删除"
+                                                  Click="DeleteClockMenuItem_Click"
+                                                  Tag="{Binding City}" />
+                                    </ContextMenu>
+                                </Border.ContextMenu>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Grid.Row="0"
+                                               Grid.Column="0"
+                                               MinWidth="60"
+                                               Text="{Binding City}"
+                                               FontFamily="Microsoft YaHei UI"
+                                               FontSize="16"
+                                               FontWeight="SemiBold"
+                                               Foreground="{Binding PrimaryForeground}"
+                                               TextTrimming="CharacterEllipsis"
+                                               VerticalAlignment="Center" />
+
+                                    <TextBlock Grid.Row="0"
+                                               Grid.Column="2"
+                                               Text="{Binding TimeText}"
+                                               FontFamily="Consolas"
+                                               FontSize="28"
+                                               FontWeight="Bold"
+                                               Foreground="{Binding PrimaryForeground}"
+                                               HorizontalAlignment="Right"
+                                               TextAlignment="Right"
+                                               VerticalAlignment="Center" />
+
+                                    <TextBlock Grid.Row="1"
+                                               Grid.Column="0"
+                                               Text="{Binding DateText}"
+                                               FontFamily="Microsoft YaHei UI"
+                                               FontSize="12"
+                                               Foreground="{Binding SecondaryForeground}"
+                                               TextTrimming="CharacterEllipsis"
+                                               VerticalAlignment="Center" />
+
+                                    <TextBlock Grid.Row="1"
+                                               Grid.Column="2"
+                                               Text="{Binding RegionText}"
+                                               FontFamily="Microsoft YaHei UI"
+                                               FontSize="12"
+                                               Foreground="{Binding MutedForeground}"
+                                               HorizontalAlignment="Right"
+                                               TextAlignment="Right"
+                                               VerticalAlignment="Center" />
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </Grid>
+    </Border>
+</Window>

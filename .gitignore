@@ -1,0 +1,17 @@
+bin/
+obj/
+build/
+dist/
+__pycache__/
+*.pyc
+*.pyo
+*.user
+*.suo
+*.cache
+*.pdb
+.vs/
+.codeartsdoer/
+WorldClockWpf/publish/
+WorldClockWpf/publish-fdd/
+world_clock_config.json
+dist/world_clock_config.json
