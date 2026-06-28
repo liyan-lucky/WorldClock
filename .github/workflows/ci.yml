@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  dotnet-build:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Build WPF project
+        run: dotnet build WorldClockWpf/WorldClockWpf.csproj --configuration Release
+
+  repository-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check required files
+        run: |
+          test -f README.md
+          test -f LICENSE
+          test -f NOTICE.md
+          test -f THIRD_PARTY_NOTICES.md
+          test -f DISCLAIMER.md
+          test -f PRIVACY.md
+          test -f SECURITY.md
+          test -f CONTRIBUTING.md
+          test -f COMPLIANCE.md
+          test -f requirements.txt
+
+      - name: Check sensitive file patterns
+        run: |
+          ! find . -type f \( -iname "*.pfx" -o -iname "*.snk" -o -iname "*.pem" -o -iname "*.key" \) | grep .
